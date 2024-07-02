@@ -1,25 +1,28 @@
-# My Stowed Files
-Configuration files for various GNU programs. Mainly Emacs and Bash.  
+# Stowed Files
+Contains configuration files for various GNU programs.  
+- Bash  
+- Emacs  
+- Nano  
+- Screen  
 
-These configurations are intended to be used with GNU `stow` on MacOS; however this is not a requirement.  
+Files under the `served` directory are more focused towards production Linux systems, while files under the top directory are developed and used on MacOS using [Homebrew](https://brew.sh/).
 
-## Installing GNU stow
-Install GNU `stow` via your system package manager.  
-
-Homebrew:  
-`brew update && brew install stow`
-
-## Installation  
+## To Use
 Get to your home directory:  
 `cd`  
 
 Clone this repository:  
-`git clone https://github.com/kbelleau/stowed.git`  
+`git clone https://github.com/beelleau/stowed.git`  
 
 Change into the `stowed/` directory:  
 `cd stowed`  
 
-Use GNU stow to create symlinks:  
+[Optional] Use GNU stow to create symlinks:  
 `stow .`  
+
+Or, copy the files into your home directory.  
+
+## Installing GNU stow
+You can install GNU `stow` via your system package manager.  
 
 See more information about GNU stow [here](https://www.gnu.org/software/stow/).

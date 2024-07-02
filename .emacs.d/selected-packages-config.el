@@ -1,19 +1,23 @@
 ;; -*- coding: utf-8; lexical-binding: t; -*-
-;; kbelleau selected-packages-config.el
+;; beelleau selected-packages-config.el
 
 (setq package-selected-packages
       '(modus-themes
         org-superstar
+        indent-bars
+        corfu
         vertico
         orderless
-        corfu
         lin
         substitute
         yasnippet
+        eglot
+        tramp
         paredit
+        literate-scratch
         undo-fu
-        go-mode
+        inf-ruby
         yaml-mode
-        json-mode
         sed-mode
+        dockerfile-mode
         markdown-mode))

@@ -1,8 +1,10 @@
-# beelleau - .bashrc - MacOS w/ homebrew
-# configured on MacOS Sequoia
+# beelleau - .bashrc - served
 
 # if not running interactively, don't run any configurations
 [[ $- != *i* ]] && return
+
+# make sure emacs keybinding mode is used
+set -o emacs
 
 # ensure session history
 history -a
@@ -14,22 +16,21 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # setting for history length and size
-HISTSIZE=1000
-HISTFILESIZE=4000
+HISTSIZE=500
+HISTFILESIZE=2000
 
 # check the window size after each command and update if necessary LINES/COLUMNS
 shopt -s checkwinsize
 
 # fancy PS1
-export PS1=$'\[\e[1;37m\]\u\[\e[0m\]@\[\e[1;34m\]\h\[\e[0m\] \w \n \$ '
-
-# enable bash completion via homebrew
-[[ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]] && \
-source "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"
+export PS1=$'\[\e[1;35m\]\u\[\e[0m\]@\[\e[1;31m\]\h\[\e[0m\] \w \n \$ '
 
 # assign EDITOR
-[[ -x "$HOMEBREW_PREFIX/bin/nano" ]] && \
-export EDITOR="$HOMEBREW_PREFIX/bin/nano"
+if command -v nano &>/dev/null; then
+  EDITOR=$(type -p nano)
+  export EDITOR
+  alias view='nano -v'
+fi
 
 # assign PAGER
 if command -v less &>/dev/null; then
@@ -57,7 +58,6 @@ alias lv='ls -lv'
 alias lav='ls -lav'
 alias sudocat='sudo cat'
 alias append='tee -a'
-alias view='nano -v'
 alias tp='type -P'
 
 # if we have tree installed, create some tree aliases

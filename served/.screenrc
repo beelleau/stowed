@@ -1,5 +1,5 @@
-# beelleau - .screenrc - MacOS / homebrew
-# configured on screen version 5.0.0
+# beelleau - .screenrc - served
+# configured on screen version 4.09.00
 
 # environment defaults
 env LANG=en_US.UTF-8
@@ -13,10 +13,13 @@ termcapinfo xterm* ti@:te@
 # use visual bell by default
 vbell on
 
+# enable non-blocking mode to help when ssh connections are flaky
+defnonblock 5
+
 # as a fallback; set a scrollback size
 defscrollback 10000
 
 # default window size
 hardstatus on
 hardstatus alwayslastline
-hardstatus string " %{= kW}%-w%{= bW}%n %t%{-}%+w%=%{= b4} %H "
+hardstatus string " %-w%{R}%n %t%{-}%+w%= %{R}%H "

@@ -1,5 +1,5 @@
 ;; -*- coding: utf-8; lexical-binding: t; -*-
-;; kbelleau font-config.el
+;; beelleau font-config.el
 
 ;; there are 3 basic faces
 ;; 'default' : the default face, every face will fallback to default

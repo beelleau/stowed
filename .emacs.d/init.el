@@ -1,6 +1,11 @@
 ;; -*- coding: utf-8; lexical-binding: t; -*-
-;; kbelleau init.el
+;; beelleau init.el
 (require 'package)
+
+;; FILE ENCODING
+(set-language-environment "utf-8")
+(set-default-coding-systems 'utf-8-unix)
+(setq-default buffer-file-coding-system 'utf-8-unix)
 
 ;;; THEME
 (require 'modus-themes)
@@ -12,7 +17,7 @@
       '((1 . (background overline variable-pitch 1.07))
         (2 . (variable-pitch 1.03))
         (3 . (variable-pitch 1.01))))
-(load-theme 'modus-vivendi :no-confirm)
+(load-theme 'modus-vivendi-tinted :no-confirm)
 
 ;;; FONTS
 (load-file (concat user-emacs-directory "font-config.el"))
@@ -35,7 +40,10 @@
       tab-always-indent 'complete
       frame-title-format '("GNU Emacs " emacs-version)
       ;; make scratch buffer blank
-      initial-scratch-message nil)
+      initial-scratch-message nil
+      ;; change scratch buffer major mode to special
+      initial-major-mode 'literate-scratch-mode
+      read-extended-command-predicate #'command-completion-default-include-p)
 
 ;;; FILE MANAGEMENT
 ;; backups
@@ -66,17 +74,21 @@
 
 ;; MANUALLY INSTALLED PACKAGES
 (add-to-list 'load-path
-             (concat user-emacs-directory "manual-install-packages/"))
-(load "highlight-indent-guides")
-(load "flymake-yamllint")
-;; highlight-indent-guides mode
-(require 'highlight-indent-guides)
-(setq highlight-indent-guides-method 'character
-      highlight-indent-guides-auto-enabled nil)
-(set-face-attribute 'highlight-indent-guides-character-face nil
-                    :foreground "gray25")
+             (concat user-emacs-directory "lisp/"))
 
-;;; MINOR MODE CONFIGURATIONS - GLOBAL
+;; load notif
+(require 'notif)
+
+;; load ruby-auto
+(require 'ruby-auto)
+
+;;; MINOR MODE CONFIGURATIONS
+;; tramp
+(require 'tramp)
+;; adding a gem location to tramp's default remote path
+(add-to-list 'tramp-remote-path 'tramp-own-remote-path)
+(add-to-list 'tramp-remote-path "/usr/local/bundle/bin")
+
 ;; vertico
 (require 'vertico)
 (vertico-mode t)
@@ -87,19 +99,32 @@
 ;; enabled savehist mode (used with vertico)
 (savehist-mode t)
 
-;; completion styles (orderless)
+;; completion styles (using orderless)
 (setq completion-styles '(orderless basic)
-      completion-category-overrides
-      '((file (styles basic partial-completion))))
+      completion-category-defaults nil
+      completion-category-overrides '((file (styles basic partial-completion))))
 
 ;; recentf
+(require 'recentf)
 (setq recentf-max-menu-items 10
       recentf-max-saved-items 10
       recentf-max-size 10)
-(recentf-mode 1)
+(add-hook 'after-init-hook #'recentf-mode)
 ;; recentf exclusions
-(add-to-list 'recentf-exclude
-             (concat user-emacs-directory "[*]*"))
+(add-to-list 'recentf-exclude "TODO")
+(add-to-list 'recentf-exclude "Notepad")
+
+;; indent-bars mode customizations
+(setq indent-bars-prefer-character "│"
+      indent-bars-starting-column 0
+      indent-bars-color '(highlight :face-bg nil :blend 0.3)
+      indent-bars-pattern "."
+      indent-bars-width-frac 0.2
+      indent-bars-pad-frac 0.1
+      indent-bars-zigzag nil
+      indent-bars-color-by-depth nil
+      indent-bars-highlight-current-depth nil
+      indent-bars-display-on-blank-lines nil)
 
 ;; electric pair mode
 (electric-pair-mode 1)
@@ -119,34 +144,44 @@
 ;; yasnippet
 (setq yas-snippet-dirs '("~/snippets"))
 (require 'yasnippet)
-(yas-global-mode 1)
+(add-hook 'after-init-hook #'yas-global-mode)
+
+;; paredit
+(require 'paredit)
 
 ;; flymake mode
+(require 'flymake)
 (remove-hook 'flymake-diagnostic-functions 'flymake-proc-legacy-flymake)
-
-;;; MINOR MODE CONFIGURATIONS - MODE SPECIFIC
-;; spellcheck
-(setq-default ispell-program-name "/opt/homebrew/bin/aspell")
 
 ;; eglot
 (require 'eglot)
 (setq eglot-autoshutdown t)
+;; use ruby-lsp instead of solargraph for ruby
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs '((ruby-mode ruby-ts-mode)
+                                        "ruby-lsp")))
 
 ;; corfu
 (require 'corfu)
 (setq corfu-auto t
-      corfu-quit-no-match 'separator)
+      corfu-quit-no-match 'separator
+      corfu-quit-at-boundary t
+      corfu-auto-delay 0.25
+      corfu-auto-prefix 1
+      global-corfu-minibuffer
+      (lambda ()
+        (not (or (bound-and-true-p mct--active)
+                 (bound-and-true-p vertico--input)
+                 (eq (current-local-map) read-passwd-map)))))
 
 ;; lin
 (setq lin-mode-hooks
-      '(org-mode-hook
-        emacs-lisp-mode-hook
+      '(emacs-lisp-mode-hook
         sh-mode-hook
-        go-mode-hook
-        python-mode-hook
+        sed-mode-hook
+        ruby-mode-hook
         yaml-mode-hook
-        json-mode-hook
-        markdown-mode-hook
+        dockerfile-mode-hook
         ediff-hook
         Buffer-menu-mode-hook
         recentf-dialog-mode-hook))
@@ -157,18 +192,20 @@
  'org-babel-load-languages
  '((emacs-lisp . t)
    (shell . t)
-   (python . t)))
-(setq org-babel-python-command "python3")
+   (ruby . t)))
+
+;; spellcheck
+(setq-default ispell-program-name "/opt/homebrew/bin/aspell")
 
 ;;; MAJOR MODE CONFIGURATIONS
 (load-file (concat user-emacs-directory "major-modes-config.el"))
 ;; hooks are found in the major-modes-config.el file
 
 ;;; BELL FUNCTIONS
-(load-file (expand-file-name "$HOME/.emacs.d/bell-functions.el"))
+(load-file (concat user-emacs-directory "bell-functions.el"))
 
 ;;; KEYBINDINGS
-(load-file (expand-file-name "$HOME/.emacs.d/keybindings.el"))
+(load-file (concat user-emacs-directory "keybindings.el"))
 
 ;;; DEFAULT BROWSER
 (setq browse-url-browser-function #'browse-url-default-macosx-browser)
@@ -176,11 +213,8 @@
 ;;; AFTER INIT
 (add-hook 'after-init-hook
           (lambda ()
-            (progn
-              (find-file (concat user-emacs-directory "*Scratchpad*"))
-              (kill-buffer "*scratch*")
-              (with-current-buffer "*Messages*"
-                (text-scale-decrease 1)))))
+            (with-current-buffer "*Messages*"
+              (text-scale-decrease 1))))
 
 ;;; SELECTED PACKAGES
 (load-file (concat user-emacs-directory "selected-packages-config.el"))

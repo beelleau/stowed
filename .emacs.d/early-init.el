@@ -1,5 +1,5 @@
 ;; -*- coding: utf-8; lexical-binding: t; -*-
-;; kbelleau early-init.el
+;; beelleau early-init.el
 
 ;; set garbage collection to 20 MB
 (setq gc-cons-threshold (* 20 1048576))
@@ -15,8 +15,8 @@
 (push '(scroll-bar-lines . 0) default-frame-alist)
 
 ;; set default frame size
-(push '(width . 90) default-frame-alist)
-(push '(height . 60) default-frame-alist)
+(push '(width . 81) default-frame-alist)
+(push '(height . 61) default-frame-alist)
 
 ;; give basic frame coloring while waiting for theme to load
 ;; set color to match theme that is being loaded for smoothness

@@ -1,5 +1,5 @@
 ;; -*- coding: utf-8; lexical-binding: t; -*-
-;; kbelleau bell-functions.el
+;; beelleau bell-functions.el
 
 ;; kill-word -> bell-delete-word
 (defun bell-delete-word (arg)
@@ -16,6 +16,17 @@ With argument ARG, do this that many times.
 This commmand does not push erased text to the kill ring."
   (interactive "p")
   (delete-region (point) (progn (backward-word arg) (point))))
+
+;; delete line backwards
+(defun bell-backward-delete-line ()
+  "Delete from cursor to the beginning of a line."
+  (interactive)
+  (let ((start-of-line (line-beginning-position))
+        (current-point (point)))
+    (save-excursion
+      (goto-char start-of-line)
+      (skip-chars-forward " \t")
+      (delete-region (point) current-point))))
 
 ;; write-file -> bell-write-file
 (defun bell-write-file-out ()
@@ -40,14 +51,36 @@ This commmand does not push erased text to the kill ring."
         (message (format "* %s" file-name))
       (message "* No file open in current buffer"))))
 
-;; re-open a elisp scratch buffer
-(defun bell-create-scratch nil
-  "Create a new scratch buffer."
-  (interactive)
-  (switch-to-buffer "*scratch*"))
-
 ;; markdown newline that adds ending double space
 (defun bell-markdown-newline ()
   "Insert two spaces and a newline."
   (interactive)
   (insert "  \n"))
+
+;; find-file but with /ssh: prompted (for remote access)
+(defun bell-find-file-ssh ()
+  "Opens a `find-file' prompt pre-located with '/ssh:'."
+  (interactive)
+  (let ((default-directory "/ssh:"))
+    (call-interactively 'find-file)))
+
+;; frame changing functions
+(defun bell-resize-frame-default ()
+  "Resize the current frame to 81x61 pixels."
+  (interactive)
+  (set-frame-size (selected-frame) 81 61))
+
+(defun bell-resize-frame-double ()
+  "Resize the current frame to 165x61 pixels."
+  (interactive)
+  (set-frame-size (selected-frame) 165 61))
+
+(defun bell-resize-frame-wide ()
+  "Resize the current frame to 96x61 pixels."
+  (interactive)
+  (set-frame-size (selected-frame) 96 61))
+
+(defun bell-resize-frame-thin ()
+  "Resize the current frame to 71x61 pixels."
+  (interactive)
+  (set-frame-size (selected-frame) 71 61))
