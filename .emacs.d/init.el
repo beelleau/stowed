@@ -17,7 +17,7 @@
       '((1 . (background overline variable-pitch 1.07))
         (2 . (variable-pitch 1.03))
         (3 . (variable-pitch 1.01))))
-(load-theme 'modus-vivendi :no-confirm)
+(load-theme 'modus-vivendi-tinted :no-confirm)
 
 ;;; FONTS
 (load-file (concat user-emacs-directory "font-config.el"))
@@ -41,6 +41,8 @@
       frame-title-format '("GNU Emacs " emacs-version)
       ;; make scratch buffer blank
       initial-scratch-message nil
+      ;; change scratch buffer major mode to special
+      initial-major-mode 'literate-scratch-mode
       read-extended-command-predicate #'command-completion-default-include-p)
 
 ;;; FILE MANAGEMENT

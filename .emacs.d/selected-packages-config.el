@@ -7,6 +7,7 @@
         indent-bars
         corfu
         vertico
+        consult
         orderless
         lin
         substitute
@@ -14,6 +15,7 @@
         eglot
         tramp
         paredit
+        literate-scratch
         undo-fu
         inf-ruby
         yaml-mode
