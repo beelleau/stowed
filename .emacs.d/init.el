@@ -99,10 +99,10 @@
 ;; enabled savehist mode (used with vertico)
 (savehist-mode t)
 
-;; completion styles (orderless)
+;; completion styles (using orderless)
 (setq completion-styles '(orderless basic)
-      completion-category-overrides
-      '((file (styles basic partial-completion))))
+      completion-category-defaults nil
+      completion-category-overrides '((file (styles basic partial-completion))))
 
 ;; recentf
 (require 'recentf)
@@ -165,9 +165,14 @@
 (require 'corfu)
 (setq corfu-auto t
       corfu-quit-no-match 'separator
-      corfu-separator ?_
-      corfu-auto-delay 0.3
-      corfu-auto-prefix 1)
+      corfu-quit-at-boundary t
+      corfu-auto-delay 0.25
+      corfu-auto-prefix 1
+      global-corfu-minibuffer
+      (lambda ()
+        (not (or (bound-and-true-p mct--active)
+                 (bound-and-true-p vertico--input)
+                 (eq (current-local-map) read-passwd-map)))))
 
 ;; lin
 (setq lin-mode-hooks
