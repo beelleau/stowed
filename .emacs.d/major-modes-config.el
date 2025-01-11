@@ -1,12 +1,16 @@
 ;; -*- coding: utf-8; lexical-binding: t; -*-
 ;; beelleau major-modes-config.el
 
+;; default basic in-buffer configurations:
+;; tabs => spaces
+;; tab size => 2 (spaces)
+;; fill column => 80
+
 ;; org
 (defun org-config ()
-  (setq org-startup-folded t
-        org-hide-emphasis-markers t
-        tab-width 2)
   (visual-line-mode 1)
+  (setq org-startup-folded t
+        org-hide-emphasis-markers t)
   (org-indent-mode 1)
   (org-superstar-mode 1)
   (flyspell-mode 1))
@@ -16,10 +20,7 @@
 (defun elisp-config ()
   (visual-line-mode -1)
   (setq truncate-lines t
-        show-trailing-whitespace t
-        fill-column 80
-        indent-tabs-mode nil
-        tab-width 2)
+        show-trailing-whitespace t)
   (display-fill-column-indicator-mode 1)
   (corfu-mode 1)
   (paredit-mode 1))
@@ -30,9 +31,6 @@
   (visual-line-mode -1)
   (setq truncate-lines t
         show-trailing-whitespace t
-        fill-column 80
-        indent-tabs-mode nil
-        tab-width 2
         sh-basic-offset 2)
   (display-fill-column-indicator-mode 1)
   (flymake-mode 1)
@@ -44,27 +42,21 @@
 (defun sed-config ()
   (visual-line-mode -1)
   (setq truncate-lines t
-        show-trailing-whitespace t
-        fill-column 80
-        indent-tabs-mode nil
-        tab-width 2)
+        show-trailing-whitespace t)
   (display-fill-column-indicator-mode 1))
 (add-hook 'sed-mode-hook #'sed-config)
 
 ;; ruby
 (defun ruby-config ()
-  (ruby-auto)
   (visual-line-mode -1)
-  (inf-ruby-minor-mode 1)
   (setq truncate-lines t
         show-trailing-whitespace t
-        fill-column 80
-        indent-tabs-mode nil
-        tab-width 2
         ruby-indent-tabs-mode nil
         ruby-indent-level 2)
-  (display-fill-column-indicator-mode 1)
+  (ruby-auto)
+  (inf-ruby-minor-mode 1)
   (eglot-ensure)
+  (display-fill-column-indicator-mode 1)
   (corfu-mode 1)
   (indent-bars-mode 1))
 (add-hook 'ruby-mode-hook #'ruby-config)
@@ -73,11 +65,9 @@
 (defun yaml-config ()
   (visual-line-mode -1)
   (setq truncate-lines t
-        show-trailing-whitespace t
-        fill-column 80
-        indent-tabs-mode nil
-        tab-width 2)
+        show-trailing-whitespace t)
   (display-fill-column-indicator-mode 1)
+  ; (flymake-mode 1)
   (corfu-mode 1)
   (indent-bars-mode 1))
 (add-hook 'yaml-mode-hook #'yaml-config)

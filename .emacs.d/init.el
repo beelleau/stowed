@@ -20,7 +20,18 @@
 (load-theme 'modus-vivendi-tinted :no-confirm)
 
 ;;; FONTS
-(load-file (concat user-emacs-directory "font-config.el"))
+;; there are 3 basic faces
+;; 'default' : the default face, every face will fallback to default
+;;             unless overriden
+;; 'fixed-pitch' : face for monospace
+;; 'variable-pitch' : face for italics
+
+;; sticking with sf mono - but adjusting the sizing
+(set-face-attribute 'default nil
+                    :height 120)
+
+(set-face-attribute 'mode-line nil
+                    :height 110)
 
 ;;; UI
 (set-fringe-mode 10)
@@ -44,6 +55,11 @@
       ;; change scratch buffer major mode to special
       initial-major-mode 'literate-scratch-mode
       read-extended-command-predicate #'command-completion-default-include-p)
+
+;; DEFAULT TAB / FILLCOLUMN
+(setq-default indent-tabs-mode nil
+              tab-width 2
+              fill-column 80)
 
 ;;; FILE MANAGEMENT
 ;; backups
@@ -89,6 +105,10 @@
 (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
 (add-to-list 'tramp-remote-path "/usr/local/bundle/bin")
 
+;; eglot
+(require 'eglot)
+(setq eglot-autoshutdown t)
+
 ;; vertico
 (require 'vertico)
 (vertico-mode t)
@@ -128,8 +148,11 @@
 
 ;; electric pair mode
 (electric-pair-mode 1)
-; Remove angle brackets from the list
-(setq electric-pair-alist '(quote (?< \))))
+;; prevent '<' from being paired automatically
+(setq electric-pair-inhibit-predicate
+      (lambda (c)
+        (or (char-equal c ?\<)
+            (electric-pair-default-inhibit c))))
 
 ;; speedbar
 (setq speedbar-default-position 'left
@@ -153,20 +176,12 @@
 (require 'flymake)
 (remove-hook 'flymake-diagnostic-functions 'flymake-proc-legacy-flymake)
 
-;; eglot
-(require 'eglot)
-(setq eglot-autoshutdown t)
-;; use ruby-lsp instead of solargraph for ruby
-(with-eval-after-load 'eglot
-  (add-to-list 'eglot-server-programs '((ruby-mode ruby-ts-mode)
-                                        "ruby-lsp")))
-
 ;; corfu
 (require 'corfu)
 (setq corfu-auto t
       corfu-quit-no-match 'separator
       corfu-quit-at-boundary t
-      corfu-auto-delay 0.25
+      corfu-auto-delay 0.20
       corfu-auto-prefix 1
       global-corfu-minibuffer
       (lambda ()
@@ -217,4 +232,23 @@
               (text-scale-decrease 1))))
 
 ;;; SELECTED PACKAGES
-(load-file (concat user-emacs-directory "selected-packages-config.el"))
+(setq package-selected-packages
+      '(modus-themes
+        org-superstar
+        indent-bars
+        corfu
+        vertico
+        orderless
+        lin
+        substitute
+        yasnippet
+        eglot
+        tramp
+        paredit
+        literate-scratch
+        undo-fu
+        inf-ruby
+        yaml-mode
+        sed-mode
+        dockerfile-mode
+        markdown-mode))
