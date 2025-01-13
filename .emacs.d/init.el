@@ -47,6 +47,7 @@
       window-resize-pixelwise t
       frame-resize-pixelwise t
       use-dialog-box nil
+      ns-use-proxy-icon nil
       confirm-kill-emacs #'y-or-n-p
       tab-always-indent 'complete
       frame-title-format '("GNU Emacs " emacs-version)

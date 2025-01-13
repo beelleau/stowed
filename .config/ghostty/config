@@ -1,0 +1,10 @@
+font-family = Menlo Regular
+font-size = 12
+theme = Aura
+cursor-style = bar
+window-height = 51
+window-width = 90
+title = "ghostty"
+macos-titlebar-proxy-icon = hidden
+shell-integration = bash
+macos-option-as-alt = true
