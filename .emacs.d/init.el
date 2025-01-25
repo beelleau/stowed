@@ -47,6 +47,7 @@
       window-resize-pixelwise t
       frame-resize-pixelwise t
       use-dialog-box nil
+      ns-use-proxy-icon nil
       confirm-kill-emacs #'y-or-n-p
       tab-always-indent 'complete
       frame-title-format '("GNU Emacs " emacs-version)
@@ -225,12 +226,6 @@
 ;;; DEFAULT BROWSER
 (setq browse-url-browser-function #'browse-url-default-macosx-browser)
 
-;;; AFTER INIT
-(add-hook 'after-init-hook
-          (lambda ()
-            (with-current-buffer "*Messages*"
-              (text-scale-decrease 1))))
-
 ;;; SELECTED PACKAGES
 (setq package-selected-packages
       '(modus-themes
@@ -242,8 +237,6 @@
         lin
         substitute
         yasnippet
-        eglot
-        tramp
         paredit
         literate-scratch
         undo-fu
@@ -251,4 +244,15 @@
         yaml-mode
         sed-mode
         dockerfile-mode
-        markdown-mode))
+        markdown-mode
+        ;; built-in packages to keep updated
+        tramp
+        org
+        eglot
+        flymake))
+
+;;; AFTER INIT
+(add-hook 'after-init-hook
+          (lambda ()
+            (with-current-buffer "*Messages*"
+              (text-scale-decrease 1))))
