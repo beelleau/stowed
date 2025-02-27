@@ -27,11 +27,8 @@
 ;; 'variable-pitch' : face for italics
 
 ;; sticking with sf mono - but adjusting the sizing
-(set-face-attribute 'default nil
-                    :height 120)
-
-(set-face-attribute 'mode-line nil
-                    :height 110)
+(set-face-attribute 'default nil :height 120)
+(set-face-attribute 'mode-line nil :height 110)
 
 ;;; UI
 (set-fringe-mode 10)
@@ -53,7 +50,7 @@
       frame-title-format '("GNU Emacs " emacs-version)
       ;; make scratch buffer blank
       initial-scratch-message nil
-      ;; change scratch buffer major mode to special
+      ;; change scratch buffer major mode to special literate scratch mode
       initial-major-mode 'literate-scratch-mode
       read-extended-command-predicate #'command-completion-default-include-p)
 
@@ -90,21 +87,21 @@
       search-whitespace-regex ".*?")
 
 ;; MANUALLY INSTALLED PACKAGES
-(add-to-list 'load-path
-             (concat user-emacs-directory "lisp/"))
+;; set load path
+(add-to-list 'load-path (concat user-emacs-directory "lisp/"))
 
 ;; load notif
+;; notif requires org-mode, so we'll load org first
 (require 'notif)
 
-;; load ruby-auto
-(require 'ruby-auto)
+;; load pyvenv
+(require 'pyvenv)
 
 ;;; MINOR MODE CONFIGURATIONS
 ;; tramp
 (require 'tramp)
 ;; adding a gem location to tramp's default remote path
 (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
-(add-to-list 'tramp-remote-path "/usr/local/bundle/bin")
 
 ;; eglot
 (require 'eglot)
@@ -138,6 +135,7 @@
 ;; indent-bars mode customizations
 (setq indent-bars-prefer-character "│"
       indent-bars-starting-column 0
+      indent-bars-display-on-blank-lines t
       indent-bars-color '(highlight :face-bg nil :blend 0.3)
       indent-bars-pattern "."
       indent-bars-width-frac 0.2
@@ -195,8 +193,9 @@
       '(emacs-lisp-mode-hook
         sh-mode-hook
         sed-mode-hook
-        ruby-mode-hook
+        python-mode-hook
         yaml-mode-hook
+        json-mode-hook
         dockerfile-mode-hook
         ediff-hook
         Buffer-menu-mode-hook
@@ -208,14 +207,15 @@
  'org-babel-load-languages
  '((emacs-lisp . t)
    (shell . t)
-   (ruby . t)))
+   (python . t)))
+(setq org-babel-python-command "python3")
 
 ;; spellcheck
 (setq-default ispell-program-name "/opt/homebrew/bin/aspell")
 
 ;;; MAJOR MODE CONFIGURATIONS
 (load-file (concat user-emacs-directory "major-modes-config.el"))
-;; hooks are found in the major-modes-config.el file
+;; mode specific hooks/configs are found in the major-modes-config.el file
 
 ;;; BELL FUNCTIONS
 (load-file (concat user-emacs-directory "bell-functions.el"))
@@ -228,28 +228,29 @@
 
 ;;; SELECTED PACKAGES
 (setq package-selected-packages
-      '(modus-themes
-        org-superstar
-        indent-bars
-        corfu
-        vertico
-        orderless
-        lin
-        substitute
-        yasnippet
-        paredit
-        literate-scratch
-        undo-fu
-        inf-ruby
-        yaml-mode
-        sed-mode
+      '(corfu
         dockerfile-mode
+        eglot               ;; built-in pkg to keep up-to-date
+        eldoc               ;; built-in pkg to keep up-to-date
+        flymake             ;; built-in pkg to keep up-to-date
+        indent-bars
+        json-mode
+        lin
+        literate-scratch
         markdown-mode
-        ;; built-in packages to keep updated
-        tramp
-        org
-        eglot
-        flymake))
+        modus-themes
+        orderless
+        org-superstar
+        paredit
+        python              ;; built-in pkg to keep up-to-date
+        sed-mode
+        substitute
+        tramp               ;; built-in pkg to keep up-to-date
+        undo-fu
+        vertico
+        yaml-mode
+        yasnippet
+        xref))              ;; build-in pkg to keep up-to-date
 
 ;;; AFTER INIT
 (add-hook 'after-init-hook
