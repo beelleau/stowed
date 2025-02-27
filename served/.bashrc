@@ -39,6 +39,19 @@ if command -v less &>/dev/null; then
   export LESSHISTFILE=-
 fi
 
+# debian config
+# bash completion (if not already already enabled in /etc/bash.bashrc)
+[[ -r /usr/share/bash-completion/bash_completion ]] && \
+  source /usr/share/bash-completion/bash_completion
+
+# debian config - chroot
+# set variable identifying the chroot you work in (used in the prompt below)
+[[ -z "${debian_chroot:-}" ]] && [[ -r /etc/debian_chroot ]] && \
+  DEBIAN_CHROOT=$(cat /etc/debian_chroot)
+
+[[ "$debian_chroot" ]] && \
+  PS1="(debian chroot${DEBIAN_CHROOT:+:$DEBIAN_CHROOT}) ${PS1}"
+
 # have ls and grep use colors
 if command -v dircolors &>/dev/null; then
   alias ls='ls --color=auto'

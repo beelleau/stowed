@@ -1,5 +1,5 @@
 ;; -*- coding: utf-8; lexical-binding: t; -*-
-;; beelleau keybinds.el
+;; beelleau keybindings.el
 
 ;;; OS SPECIFIC
 ;; mac option as 'meta'
@@ -20,13 +20,15 @@
 (define-prefix-command 'toggle-prefix-map)
 
 ;;; MAJOR MODE KEY HOOKS
-;; ruby hook
-(add-hook 'ruby-mode-hook
+;; python hook
+
+(add-hook 'python-mode-hook
           (lambda ()
-            (define-prefix-command 'bell-ruby-map)
-            (local-set-key (kbd "C-c r") bell-ruby-map)
-            (local-set-key (kbd "C-c r c") #'inf-ruby-console-auto)
-            (local-set-key (kbd "C-c r a") #'ruby-auto)))
+            (define-prefix-command 'pyvenv-prefix)
+            (local-set-key (kbd "C-c v") 'pyvenv-prefix)
+            (local-set-key (kbd "C-c v a") #'pyvenv-activate)
+            (local-set-key (kbd "C-c v d") #'pyvenv-deactivate)
+            (local-set-key (kbd "C-c v w") #'pyvenv-workon)))
 
 ;; markdown hook
 (add-hook 'markdown-mode-hook
@@ -80,7 +82,7 @@
   (define-key map (kbd "C-c n i") #'notif-find-ticket)
   (define-key map (kbd "C-c n t") #'notif-find-todo)
   (define-key map (kbd "C-c n n") #'notif-find-notepad)
-  ;; (define-key map (kbd "C-c n f") #'notif-search)
+  ;; (define-key map (kbd "C-c n X") #'notif-search)
 
   ;; substitute functions (prefixed)
   (define-key map (kbd "C-c q") substitute-prefix-map)

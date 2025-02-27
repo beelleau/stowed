@@ -76,9 +76,9 @@ This commmand does not push erased text to the kill ring."
   (set-frame-size (selected-frame) 165 61))
 
 (defun bell-resize-frame-wide ()
-  "Resize the current frame to 96x61 pixels."
+  "Resize the current frame to 101x61 pixels."
   (interactive)
-  (set-frame-size (selected-frame) 96 61))
+  (set-frame-size (selected-frame) 101 61))
 
 (defun bell-resize-frame-thin ()
   "Resize the current frame to 71x61 pixels."

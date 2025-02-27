@@ -6,7 +6,6 @@
 ;; tab size => 2 (spaces)
 ;; fill column => 80
 
-;; org
 (defun org-config ()
   (visual-line-mode 1)
   (setq org-startup-folded t
@@ -16,7 +15,6 @@
   (flyspell-mode 1))
 (add-hook 'org-mode-hook #'org-config)
 
-;; emacs lisp
 (defun elisp-config ()
   (visual-line-mode -1)
   (setq truncate-lines t
@@ -26,7 +24,6 @@
   (paredit-mode 1))
 (add-hook 'emacs-lisp-mode-hook #'elisp-config)
 
-;; sh
 (defun sh-config ()
   (visual-line-mode -1)
   (setq truncate-lines t
@@ -38,7 +35,6 @@
   (indent-bars-mode 1))
 (add-hook 'sh-mode-hook #'sh-config)
 
-;; sed
 (defun sed-config ()
   (visual-line-mode -1)
   (setq truncate-lines t
@@ -46,33 +42,38 @@
   (display-fill-column-indicator-mode 1))
 (add-hook 'sed-mode-hook #'sed-config)
 
-;; ruby
-(defun ruby-config ()
+(defun py-config ()
   (visual-line-mode -1)
+  (pyvenv-mode 1)
   (setq truncate-lines t
         show-trailing-whitespace t
-        ruby-indent-tabs-mode nil
-        ruby-indent-level 2)
-  (ruby-auto)
-  (inf-ruby-minor-mode 1)
-  (eglot-ensure)
+        python-indent-guess-indent-offset-verbose nil
+        tab-width 4)
   (display-fill-column-indicator-mode 1)
+  (eglot-ensure)
   (corfu-mode 1)
   (indent-bars-mode 1))
-(add-hook 'ruby-mode-hook #'ruby-config)
+(add-hook 'python-mode-hook #'py-config)
 
-;; yaml
 (defun yaml-config ()
   (visual-line-mode -1)
   (setq truncate-lines t
-        show-trailing-whitespace t)
+        show-trailing-whitespace t
+        yaml-indent-offset 2)
   (display-fill-column-indicator-mode 1)
-  ; (flymake-mode 1)
+  (flymake-mode 1)
   (corfu-mode 1)
   (indent-bars-mode 1))
 (add-hook 'yaml-mode-hook #'yaml-config)
 
-;; dockerfile
+(defun json-config ()
+  (visual-line-mode -1)
+  (setq truncate-lines t
+        show-trailing-whitespace t)
+  (corfu-mode 1)
+  (indent-bars-mode 1))
+(add-hook 'json-mode-hook #'json-config)
+
 (defun dockerfile-config ()
   (visual-line-mode -1)
   (setq truncate-lines t
@@ -80,13 +81,11 @@
   (corfu-mode 1))
 (add-hook 'dockerfile-mode-hook #'dockerfile-config)
 
-;; markdown
 (defun md-config ()
   (visual-line-mode 1)
   (flyspell-mode 1))
 (add-hook 'markdown-mode-hook #'md-config)
 
-;; snippet
 (defun snippet-config ()
   (visual-line-mode -1)
   (setq truncate-lines t
