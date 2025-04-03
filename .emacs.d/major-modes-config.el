@@ -61,20 +61,10 @@
         show-trailing-whitespace t
         yaml-indent-offset 2)
   (display-fill-column-indicator-mode 1)
-  ;; (flymake-mode 1)
+  (flymake-mode 1)
   (corfu-mode 1)
   (indent-bars-mode 1))
 (add-hook 'yaml-mode-hook #'yaml-config)
-
-(defun hcl-config ()
-  (visual-line-mode -1)
-  (setq truncate-lines t
-        show-trailing-whitespace t
-        hcl-indent-level 2)
-  (display-fill-column-indicator-mode 1)
-  (corfu-mode 1)
-  (indent-bars-mode 1))
-(add-hook 'hcl-mode-hook #'hcl-config)
 
 (defun dockerfile-config ()
   (visual-line-mode -1)

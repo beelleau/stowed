@@ -24,7 +24,7 @@
 (add-hook 'go-mode-hook
           (lambda ()
             (define-prefix-command 'bell-go-map)
-            (local-set-key (kbd "C-c g") #'gofmt)))
+            (local-set-key (kbd "C-c g f") #'gofmt)))
 
 ;; markdown hook
 (add-hook 'markdown-mode-hook

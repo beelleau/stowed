@@ -94,9 +94,6 @@
 ;; notif requires org-mode, so we'll load org first
 (require 'notif)
 
-;; load hcl-mode
-(require 'hcl-mode)
-
 ;;; MINOR MODE CONFIGURATIONS
 ;; tramp
 (require 'tramp)
@@ -212,7 +209,7 @@
 
 ;;; MAJOR MODE CONFIGURATIONS
 (load-file (concat user-emacs-directory "major-modes-config.el"))
-;; hooks are found in the major-modes-config.el file
+;; mode specific hooks/configs are found in the major-modes-config.el file
 
 ;;; BELL FUNCTIONS
 (load-file (concat user-emacs-directory "bell-functions.el"))
