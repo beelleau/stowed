@@ -5,8 +5,6 @@ Contains configuration files for various GNU programs.
 - Nano  
 - Screen  
 
-Files under the `served` directory are more focused towards production Linux systems, while files under the top directory are developed and used on MacOS using [Homebrew](https://brew.sh/).
-
 ## To Use
 Get to your home directory:  
 `cd`  
