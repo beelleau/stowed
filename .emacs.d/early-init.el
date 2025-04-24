@@ -18,9 +18,12 @@
 (push '(width . 81) default-frame-alist)
 (push '(height . 61) default-frame-alist)
 
+
 ;; give basic frame coloring while waiting for theme to load
 ;; set color to match theme that is being loaded for smoothness
-(set-face-attribute 'default nil :background "#000000")
+(set-face-attribute 'default nil
+                    :background "#000000"
+                    :foreground "#ffffff")
 
 ;; set frame title temporarily
 (setq frame-title-format (concat "Starting GNU Emacs " emacs-version "..."))
