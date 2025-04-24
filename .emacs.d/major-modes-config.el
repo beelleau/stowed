@@ -61,6 +61,7 @@
         show-trailing-whitespace t
         yaml-indent-offset 2)
   (display-fill-column-indicator-mode 1)
+  (flymake-yamllint-setup)
   (flymake-mode 1)
   (corfu-mode 1)
   (indent-bars-mode 1))

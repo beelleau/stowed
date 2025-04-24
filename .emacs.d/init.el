@@ -2,6 +2,38 @@
 ;; beelleau init.el
 (require 'package)
 
+;;; SELECTED PACKAGES
+(setq package-selected-packages
+      '(corfu
+        dockerfile-mode
+        eglot   ;; built-in pkg to keep up-to-date
+        eldoc   ;; built-in pkg to keep up-to-date
+        flymake ;; built-in pkg to keep up-to-date
+        indent-bars
+        json-mode
+        lin
+        literate-scratch
+        markdown-mode
+        modus-themes
+        orderless
+        org-superstar
+        paredit
+        python ;; built-in pkg to keep up-to-date
+        sed-mode
+        substitute
+        tramp ;; built-in pkg to keep up-to-date
+        undo-fu
+        vertico
+        yaml-mode
+        yasnippet
+        xref)) ;; built-in pkg to keep up-to-date
+
+;; install selected packages if not installed
+(package-initialize)
+(unless package-archive-contents
+  (package-refresh-contents))
+(package-install-selected-packages)
+
 ;; FILE ENCODING
 (set-language-environment "utf-8")
 (set-default-coding-systems 'utf-8-unix)
@@ -17,7 +49,7 @@
       '((1 . (background overline variable-pitch 1.07))
         (2 . (variable-pitch 1.03))
         (3 . (variable-pitch 1.01))))
-(load-theme 'modus-vivendi-tinted :no-confirm)
+(load-theme 'modus-vivendi :no-confirm)
 
 ;;; FONTS
 ;; there are 3 basic faces
@@ -91,16 +123,18 @@
 (add-to-list 'load-path (concat user-emacs-directory "lisp/"))
 
 ;; load notif
-;; notif requires org-mode, so we'll load org first
 (require 'notif)
 
 ;; load pyvenv
 (require 'pyvenv)
 
+;; load flymale-yamllint
+(require 'flymake-yamllint)
+
 ;;; MINOR MODE CONFIGURATIONS
 ;; tramp
 (require 'tramp)
-;; adding a gem location to tramp's default remote path
+;; adding remote PATH set to tramp's default remote path
 (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
 
 ;; eglot
@@ -201,6 +235,7 @@
         Buffer-menu-mode-hook
         recentf-dialog-mode-hook))
 (lin-global-mode 1)
+(setq lin-face 'lin-red)
 
 ;; org babel
 (org-babel-do-load-languages
@@ -225,32 +260,6 @@
 
 ;;; DEFAULT BROWSER
 (setq browse-url-browser-function #'browse-url-default-macosx-browser)
-
-;;; SELECTED PACKAGES
-(setq package-selected-packages
-      '(corfu
-        dockerfile-mode
-        eglot               ;; built-in pkg to keep up-to-date
-        eldoc               ;; built-in pkg to keep up-to-date
-        flymake             ;; built-in pkg to keep up-to-date
-        indent-bars
-        json-mode
-        lin
-        literate-scratch
-        markdown-mode
-        modus-themes
-        orderless
-        org-superstar
-        paredit
-        python              ;; built-in pkg to keep up-to-date
-        sed-mode
-        substitute
-        tramp               ;; built-in pkg to keep up-to-date
-        undo-fu
-        vertico
-        yaml-mode
-        yasnippet
-        xref))              ;; build-in pkg to keep up-to-date
 
 ;;; AFTER INIT
 (add-hook 'after-init-hook

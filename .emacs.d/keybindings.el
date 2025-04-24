@@ -21,7 +21,6 @@
 
 ;;; MAJOR MODE KEY HOOKS
 ;; python hook
-
 (add-hook 'python-mode-hook
           (lambda ()
             (define-prefix-command 'pyvenv-prefix)
